@@ -134,6 +134,11 @@ class Registration extends Component {
               <Button onPress={() => this.setState({ page: -1 })}>
                   Returning User ? Log In Here
               </Button>
+              <TouchableOpacity style={{alignItems:'center' }}onPress={()=>{Actions.elite()}}>
+                <Text style={{margin:10, color:'#cc0000'}}>
+                  Have an accees token?
+                </Text>
+              </TouchableOpacity>
           </View>
         </View>
       );

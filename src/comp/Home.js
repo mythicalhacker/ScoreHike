@@ -30,7 +30,7 @@ class Home extends Component {
      messagingSenderId: '867124464424'
   });
 	//firebase.auth().signOut();
-		
+
 		firebase.auth().onAuthStateChanged(user => {
 		if (user) {
 			this.setState({ logged: true });
@@ -53,7 +53,8 @@ class Home extends Component {
 			firebase.database().ref('/factor/').on('value',
 					(snapshot) => {
 							console.log(snapshot.val())
-							this.setState({ study: snapshot.val().study,
+							this.setState({
+														study: snapshot.val().study,
 								            sport: snapshot.val().sport,
 								            liquor: snapshot.val().liquor,
 								            outing: snapshot.val().outing,
@@ -68,53 +69,53 @@ class Home extends Component {
 			this.setState({ logged: false });
 		}
 		});
-		
+
 	}
 	mainview() {
 		return (
-							<View>
-									<View style={{ alignItems: 'center'}}>
-									<Text style= {{ color: 'green', fontSize: 40 }}> {this.state.curGPA} </Text>
+							<ScrollView>
+									<View style={{ alignItems: 'center' }}>
+									<Text style= {{marginTop:30, color: 'green', fontSize: 40 }}> {this.state.curGPA} </Text>
 									</View>
 									<View style={Styles.mainViewStyle}>
 												<Icon onPress={ () => {
 													firebase.database().ref('QnA/' + this.state.userID).update({
 														curStudy: Math.round((this.state.curStudy+1)*100)/100,
 														curGPA: Math.round((this.state.curGPA+this.state.study)*100)/100
-													})											
-												}} 
-												text='Study' url={this.state.curStudy} />
+													})
+												}}
+												pic={require('./../images/study.png')} url={this.state.curStudy} />
 												<Icon onPress={ () => {
 													firebase.database().ref('QnA/' + this.state.userID).update({
 														curSport: Math.round((this.state.curSport+1)*100)/100,
 														curGPA: Math.round((this.state.curGPA+this.state.sport)*100)/100
-													})											
-												}}  
+													})
+												}}
 
-												 text='Sports'	url={this.state.curSport} />
+											pic={require('./../images/sport.png')} 	url={this.state.curSport} />
 												<Icon onPress={ () => {
 													firebase.database().ref('QnA/' + this.state.userID).update({
 														curWorkshop: Math.round((this.state.curWorkshop+1)*100)/100,
 														curGPA: Math.round((this.state.curGPA+this.state.workshop)*100)/100
-													})											
-												}} 
-												 text='WorkShop' url={this.state.curWorkshop} />
+													})
+												}}
+												 pic={require('./../images/workshop.png')}  url={this.state.curWorkshop} />
 												<Icon onPress={ () => {
 													firebase.database().ref('QnA/' + this.state.userID).update({
 														curLiquor: Math.round((this.state.curLiquor+1)*100)/100,
 														curGPA: Math.round((this.state.curGPA+this.state.liquor)*100)/100
-													})											
-												}}  
-												 text='Liquor'	url={this.state.curLiquor} />
+													})
+												}}
+											pic={require('./../images/liquor.png')} 	url={this.state.curLiquor} />
 												<Icon onPress={ () => {
 													firebase.database().ref('QnA/' + this.state.userID).update({
 														curOuting: Math.round((this.state.curOuting+1)*100)/100,
 														curGPA: Math.round((this.state.curGPA+this.state.outing)*100)/100
-													})											
-												}} 
-												text='Outing'url={this.state.curOuting} />
+													})
+												}}
+									pic={require('./../images/outing.png')} url={this.state.curOuting} />
 									</View>
-								</View>
+								</ScrollView>
 		);
 	}
 	renderer() {
@@ -123,7 +124,7 @@ class Home extends Component {
 				return (this.mainview());
 			case false:
 				Actions.registration();
-				return (this.mainview());
+				return (null);
 			default:
 				return (
 					<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -140,12 +141,13 @@ class Home extends Component {
 
 const Styles = {
 	mainViewStyle: {
+		flex:1,
 		paddingTop: 10,
 		paddingBottom: 100,
 		paddingLeft: 2,
 		paddingRight: 2,
 		flexWrap: 'wrap',
-		flexDirection: 'row',
+		flexDirection: 'column',
 		justifyContent: 'space-around',
 		backgroundColor: '#f9f9f9'
 	}
